@@ -1,6 +1,9 @@
+table {
+  width: 100%;
 
-table tr td {
-  border: 1px solid #ccc;
+  tr td {
+    border: 1px solid #ccc;
+  }
 }
 
 ul {
@@ -10,25 +13,9 @@ ul {
   margin-left: 40px;
 }
 
-.cdk-drop-list-receiving,
-.cdk-drop-list-dragging {
-  display: block !important;
-  border: 2px dashed #ccc !important;
+li {
+  list-style: none;
 }
-
-td.cdk-drop-list {
-  display: none;
-}
-
-
-.atable .col {
-  width: 100%;
-  &.cdk-drop-list {
-    display: none;
-  }
-}
-
-
 
 .draggable .drag-handle {
   cursor: move;
@@ -36,28 +23,21 @@ td.cdk-drop-list {
 
 .dropzone {
   padding: 10px;
-  background: powderblue;
-  border: 2px solid steelblue;
+  border: 1px solid #ccc;
 }
 
 .dropzone>* {
   margin-top: 10px;
 }
 
-.item {
-  padding: 10px;
-  background: mistyrose;
-  border: 2px solid steelblue;
-}
-
 .dropzone .draggable--origin {
   display: block !important;
 }
 
-
 .dropzone .draggable-source--is-dragging {
-  background: #666;
-  color: #666;
+  background: #ccc;
+  color: #ccc;
+  border: 2px dashed #ccc;
 }
 
 .dropzone .draggable-source--is-dragging>* {

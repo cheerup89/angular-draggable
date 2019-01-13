@@ -1,142 +1,73 @@
-<table *ngIf="false" style="width: 100%;">
-	<tbody cdkDropListGroup>
-		<ng-container *ngFor="let cat of categories; index as catIdx">
-			<tr cdkDrag>
+<sortable [handle]="true">
+	<table>
+		<tbody sortableDropzone
+		       #rootDropzone="dropzone"
+		       [dropzoneData]="root"
+		       (dropped)="onRootDropped($event)">
+			<ng-container></ng-container>
+			<tr *ngFor="let rt of root; index as rtIdx"
+			    sortableDraggable
+			    #rootDraggable="draggable"
+			    [dragData]="rt">
 				<td>
-					<a class="example-handle" cdkDragHandle>
-						<svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+					<a sortableDraggableHandle>
+						<svg width="24px"
+						     fill="currentColor"
+						     viewBox="0 0 24 24">
 							<path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
-							<path d="M0 0h24v24H0z" fill="none"></path>
+							<path d="M0 0h24v24H0z"
+							      fill="none"></path>
 						</svg>
-
-						{{cat.name}}
 					</a>
+					{{rt.name}} - {{rootDraggable.isDragging()}}
 
-					<ul cdkDropList [cdkDropListData]="cat.products" (cdkDropListDropped)="onProductDropped($event)" (cdkDropListEntered)="onProductEntered($event)"
-					 (cdkDropListExited)="
-				 onProductExited($event)" (cdkDropListSorted)="onProductSorted($event)">
-						<li *ngFor="let p of cat.products" cdkDrag [cdkDragData]="p" (cdkDragStarted)="onProductStarted($event)">
-							<a class="example-handle " cdkDragHandle>
-								<svg width="24px " fill="currentColor " viewBox="0 0 24 24 ">
+					<ul sortableDropzone
+					    [dropzoneData]="rt.nodes"
+					    (dropped)="onNodeDropped($event)"
+					    (sort)="onNodeSort($event)">
+						<li *ngFor="let nd of rt.nodes"
+						    sortableDraggable
+						    #nodeDraggable="draggable"
+						    [dragData]="nd">
+							<a sortableDraggableHandle>
+								<svg width="24px "
+								     fill="currentColor "
+								     viewBox="0 0 24 24 ">
 									<path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z "></path>
-									<path d="M0 0h24v24H0z " fill="none "></path>
+									<path d="M0 0h24v24H0z "
+									      fill="none "></path>
 								</svg>
 							</a>
-							{{p}}
+							{{nd.name}} - {{nodeDraggable.isDragging()}}
+
+
+							<ul sortableDropzone
+							    [dropzoneData]="nd.leaves"
+							    (dropped)="onLeafDropped($event)"
+							    (sort)="onLeafSort($event)">
+								<li *ngFor="let lf of nd.leaves"
+								    sortableDraggable
+								    #leafDraggable="draggable"
+								    [dragData]="lf">
+									<a sortableDraggableHandle>
+										<svg width="24px "
+										     fill="currentColor "
+										     viewBox="0 0 24 24 ">
+											<path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z "></path>
+											<path d="M0 0h24v24H0z "
+											      fill="none "></path>
+										</svg>
+									</a>
+									{{lf}} - {{leafDraggable.isDragging()}}
+								</li>
+							</ul>
+							{{nd | json}}
 						</li>
 					</ul>
+
+					<pre>{{rt | json}}</pre>
 				</td>
 			</tr>
-			<tr>
-				<td cdkDropList (cdkDropListDropped)="onCategoryDropped($event, catIdx)" style="height: 50px"></td>
-			</tr>
-		</ng-container>
-	</tbody>
-</table>
-
-
-<div *ngIf="false" class="atable bordered">
-	<div cdkDropListGroup class="body">
-
-		<div>
-			<ng-container *ngFor="let cat of categories; index as catIdx">
-				<div class="row">
-					<div class="col">
-						<a class="example-handle">
-							<svg width="24px" fill="currentColor" viewBox="0 0 24 24">
-								<path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
-								<path d="M0 0h24v24H0z" fill="none"></path>
-							</svg>
-
-							{{cat.name}}
-						</a>
-
-						<ul cdkDropList [cdkDropListData]="cat.products" (cdkDropListDropped)="onProductDropped($event)" (cdkDropListEntered)="onProductEntered($event)"
-						 (cdkDropListExited)="
-				 onProductExited($event)" (cdkDropListSorted)="onProductSorted($event)">
-							<li *ngFor="let p of cat.products" cdkDrag [cdkDragData]="p" (cdkDragStarted)="onProductStarted($event)">
-								<a class="example-handle " cdkDragHandle>
-									<svg width="24px " fill="currentColor " viewBox="0 0 24 24 ">
-										<path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z "></path>
-										<path d="M0 0h24v24H0z " fill="none "></path>
-									</svg>
-								</a>
-								{{p}}
-							</li>
-						</ul>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col" cdkDropList (cdkDropListDropped)="onCategoryDropped($event, catIdx)" style="height: 50px"></div>
-				</div>
-			</ng-container>
-		</div>
-
-	</div>
-</div>
-
-
-<sortable *ngIf="false" [handle]="true">
-	<div class="dropzone">
-		<div *ngFor="let cat of categories; index as catIdx" class="dropzone draggable">
-			<a class="drag-handle">
-				<svg width="24px" fill="currentColor" viewBox="0 0 24 24">
-					<path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
-					<path d="M0 0h24v24H0z" fill="none"></path>
-				</svg>
-			</a>
-
-			{{cat.name}}
-
-			<div *ngFor="let p of cat.products" class="item draggable">
-				<a class="drag-handle">
-					<svg width="24px" fill="currentColor" viewBox="0 0 24 24">
-						<path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
-						<path d="M0 0h24v24H0z" fill="none"></path>
-					</svg>
-				</a>
-
-				{{p}}
-			</div>
-		</div>
-	</div>
-</sortable>
-
-
-<sortable *ngIf="false" [handle]="true">
-	<table style="width: 100%;">
-		<tbody sortableDropzone [dropzoneData]="categories" (dropped)="onCatDrop($event)">
-			<ng-container *ngFor="let cat of categories; index as catIdx">
-				<tr sortableDraggable [dragData]="cat">
-					<td>
-						<a sortableDraggableHandle>
-							<svg width="24px" fill="currentColor" viewBox="0 0 24 24">
-								<path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
-								<path d="M0 0h24v24H0z" fill="none"></path>
-							</svg>
-						</a>
-						{{cat.name}}
-
-						<ul sortableDropzone [dropzoneData]="cat.products" (dropped)="onProdDrop($event)">
-							<li *ngFor="let p of cat.products" sortableDraggable [dragData]="p">
-								<a sortableDraggableHandle>
-									<svg width="24px " fill="currentColor " viewBox="0 0 24 24 ">
-										<path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z "></path>
-										<path d="M0 0h24v24H0z " fill="none "></path>
-									</svg>
-								</a>
-								{{p}}
-							</li>
-						</ul>
-
-						{{cat | json}}
-					</td>
-				</tr>
-			</ng-container>
 		</tbody>
 	</table>
 </sortable>
-
-
-<tree></tree>
