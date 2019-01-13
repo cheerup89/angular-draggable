@@ -1,0 +1,46 @@
+<sortable [handle]="true">
+	<table>
+		<tbody sortableDropzone #rootDropzone="dropzone" [dropzoneData]="root" (dropped)="onRootDropped($event)">
+      <ng-container></ng-container>
+			<tr *ngFor="let rt of root; index as rtIdx" sortableDraggable #rootDraggable="draggable" [dragData]="rt">
+				<td>
+					<a sortableDraggableHandle>
+						<svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+							<path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+							<path d="M0 0h24v24H0z" fill="none"></path>
+						</svg>
+					</a>
+					{{rt.name}} - {{rootDraggable.isDragging()}}
+
+					<ul sortableDropzone [dropzoneData]="rt.nodes" (dropped)="onNodeDropped($event)" (sort)="onNodeSort($event)">
+						<li *ngFor="let nd of rt.nodes" sortableDraggable #nodeDraggable="draggable" [dragData]="nd">
+							<a sortableDraggableHandle>
+								<svg width="24px " fill="currentColor " viewBox="0 0 24 24 ">
+									<path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z "></path>
+									<path d="M0 0h24v24H0z " fill="none "></path>
+								</svg>
+							</a>
+							{{nd.name}} - {{nodeDraggable.isDragging()}}
+
+
+							<ul sortableDropzone [dropzoneData]="nd.leaves" (dropped)="onLeafDropped($event)" (sort)="onLeafSort($event)">
+								<li *ngFor="let lf of nd.leaves" sortableDraggable #leafDraggable="draggable" [dragData]="lf">
+									<a sortableDraggableHandle>
+										<svg width="24px " fill="currentColor " viewBox="0 0 24 24 ">
+											<path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z "></path>
+											<path d="M0 0h24v24H0z " fill="none "></path>
+										</svg>
+									</a>
+									{{lf}} - {{leafDraggable.isDragging()}}
+								</li>
+							</ul>
+							{{nd | json}}
+						</li>
+					</ul>
+
+					<pre>{{rt | json}}</pre>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</sortable>

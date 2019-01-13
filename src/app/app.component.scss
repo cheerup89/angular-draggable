@@ -1,0 +1,65 @@
+
+table tr td {
+  border: 1px solid #ccc;
+}
+
+ul {
+  min-height: 28px;
+  list-style: none;
+  padding: 0;
+  margin-left: 40px;
+}
+
+.cdk-drop-list-receiving,
+.cdk-drop-list-dragging {
+  display: block !important;
+  border: 2px dashed #ccc !important;
+}
+
+td.cdk-drop-list {
+  display: none;
+}
+
+
+.atable .col {
+  width: 100%;
+  &.cdk-drop-list {
+    display: none;
+  }
+}
+
+
+
+.draggable .drag-handle {
+  cursor: move;
+}
+
+.dropzone {
+  padding: 10px;
+  background: powderblue;
+  border: 2px solid steelblue;
+}
+
+.dropzone>* {
+  margin-top: 10px;
+}
+
+.item {
+  padding: 10px;
+  background: mistyrose;
+  border: 2px solid steelblue;
+}
+
+.dropzone .draggable--origin {
+  display: block !important;
+}
+
+
+.dropzone .draggable-source--is-dragging {
+  background: #666;
+  color: #666;
+}
+
+.dropzone .draggable-source--is-dragging>* {
+  visibility: hidden;
+}
